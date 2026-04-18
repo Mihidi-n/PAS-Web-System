@@ -1,1 +1,31 @@
-﻿
+﻿@model IEnumerable<PAS.Web.Models.ResearchArea>
+
+@{
+    ViewData["Title"] = "Research Areas";
+}
+
+<h2>Research Areas</h2>
+
+<form asp-action="AddResearchArea" method="post" class="mb-3">
+    @Html.AntiForgeryToken()
+    <div class="input-group">
+        <input type="text" name="name" class="form-control" placeholder="Enter research area" />
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var area in Model)
+        {
+            <tr>
+                <td>@area.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
