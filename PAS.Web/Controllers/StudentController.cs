@@ -30,3 +30,46 @@ public class StudentController : Controller
 
         return View(proposals);
     }﻿
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        ViewBag.ResearchAreas = new SelectList(
+            await _context.ResearchAreas.OrderBy(r => r.Name).ToListAsync(),
+            "Id",
+            "Name");
+
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ProjectProposalCreateVm vm)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ResearchAreas = new SelectList(
+                await _context.ResearchAreas.OrderBy(r => r.Name).ToListAsync(),
+                "Id",
+                "Name");
+
+            return View(vm);
+        }
+
+        var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+        var proposal = new ProjectProposal
+        {
+            Title = vm.Title,
+            Abstract = vm.Abstract,
+            TechnicalStack = vm.TechnicalStack,
+            ResearchAreaId = vm.ResearchAreaId,
+            StudentId = studentId,
+            Status = ProposalStatus.Pending
+        };
+
+        _context.ProjectProposals.Add(proposal);
+        await _context.SaveChangesAsync();
+        TempData["Success"] = "Action completed successfully!";
+        return RedirectToAction(nameof(Dashboard));
+    }
+  
