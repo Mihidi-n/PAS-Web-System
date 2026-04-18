@@ -25,6 +25,13 @@ public class AdminController : Controller
 
     return View(matches);
 }
+ public async Task<IActionResult> Reassign(int id)
+ {
+     var match = await _context.Matches.FindAsync(id);
+
+     ViewBag.Supervisors = _context.Users.ToList();
+
+     return View(match);
 [HttpPost]
 public async Task<IActionResult> Reassign(int id, string supervisorId)
 {
