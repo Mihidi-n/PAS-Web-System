@@ -1,0 +1,20 @@
+﻿@model List<PAS.Web.Models.ApplicationUser>
+
+<h2>User Management</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>

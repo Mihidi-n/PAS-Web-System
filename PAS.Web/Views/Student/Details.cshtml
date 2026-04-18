@@ -1,0 +1,16 @@
+﻿@model PAS.Web.Models.ProjectProposal
+
+@{
+    ViewData["Title"] = "Proposal Details";
+}
+
+<h2>Proposal Details</h2>
+
+<div>
+    <p><strong>Title:</strong> @Model.Title</p>
+    <p><strong>Abstract:</strong> @Model.Abstract</p>
+    <p><strong>Technical Stack:</strong> @Model.TechnicalStack</p>
+    <p><strong>Research Area:</strong> @Model.ResearchArea?.Name</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Identity Revealed:</strong> @Model.IdentityRevealed</p>
+</div>
