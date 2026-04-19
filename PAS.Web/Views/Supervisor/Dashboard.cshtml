@@ -33,13 +33,17 @@
                     <form asp-action="ExpressInterest" method="post" class="mb-2">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="proposalId" value="@item.Id" />
-                        <button type="submit" class="btn btn-warning btn-sm">Express Interest</button>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            Express Interest
+                        </button>
                     </form>
 
                     <form asp-action="ConfirmMatch" method="post">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="proposalId" value="@item.Id" />
-                        <button type="submit" class="btn btn-success btn-sm">Confirm Match</button>
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Confirm Match
+                        </button>
                     </form>
                 </td>
             </tr>
