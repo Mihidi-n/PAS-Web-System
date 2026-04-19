@@ -91,3 +91,20 @@ public async Task<IActionResult> ConfirmMatch(int proposalId)
     TempData["Success"] = "Match confirmed successfully!";
     return RedirectToAction("MatchedDetails", new { proposalId });
 }
+public async Task<IActionResult> MatchedDetails(int proposalId)
+{
+    var supervisorId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+    var match = await _context.Matches
+        .Include(m => m.ProjectProposal)
+        .ThenInclude(p => p.Student)
+        .FirstOrDefaultAsync(m => m.ProjectProposalId == proposalId && m.SupervisorId == supervisorId);
+
+    if (match == null)
+    {
+        TempData["Success"] = "Match not found!";
+        return RedirectToAction("Dashboard");
+    }
+
+    return View(match);
+}
