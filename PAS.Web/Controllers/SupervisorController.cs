@@ -74,3 +74,20 @@ public async Task<IActionResult> ExpressInterest(int proposalId)
     TempData["Success"] = "Interest expressed successfully!";
     return RedirectToAction(nameof(Dashboard));
 }
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> ConfirmMatch(int proposalId)
+{
+    var supervisorId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+    var result = await _matchingService.ConfirmMatchAsync(proposalId, supervisorId);
+
+    if (!result)
+    {
+        TempData["Success"] = "Match confirmation failed.";
+        return RedirectToAction(nameof(Dashboard));
+    }
+
+    TempData["Success"] = "Match confirmed successfully!";
+    return RedirectToAction("MatchedDetails", new { proposalId });
+}
