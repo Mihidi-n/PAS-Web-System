@@ -1,1 +1,25 @@
-﻿
+@model PAS.Web.Models.Match
+
+@{
+    ViewData["Title"] = "Matched Details";
+}
+
+<h2 class="mb-3">Matched Project Details</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <h4>@Model.ProjectProposal?.Title</h4>
+
+        <p><strong>Abstract:</strong> @Model.ProjectProposal?.Abstract</p>
+        <p><strong>Technical Stack:</strong> @Model.ProjectProposal?.TechnicalStack</p>
+
+        <hr />
+
+        <h5>Student Details</h5>
+
+        <p><strong>Name:</strong> @Model.ProjectProposal?.Student?.Email</p>
+        <p><strong>Email:</strong> @Model.ProjectProposal?.Student?.Email</p>
+
+    </div>
+</div>﻿
