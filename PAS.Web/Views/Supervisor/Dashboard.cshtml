@@ -1,1 +1,48 @@
-﻿
+﻿@model List<PAS.Web.ViewModels.BlindProjectVm>
+
+@{
+    ViewData["Title"] = "Supervisor Dashboard";
+}
+
+<h2>Blind Review Dashboard</h2>
+<a asp-controller="Supervisor" asp-action="Expertise" class="btn btn-primary mb-3">
+    Manage Expertise
+</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Abstract</th>
+            <th>Tech Stack</th>
+            <th>Research Area</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Abstract</td>
+                <td>@item.TechnicalStack</td>
+                <td>@item.ResearchAreaName</td>
+                <td>Pending</td>
+                <td>
+                    <form asp-action="ExpressInterest" method="post" class="mb-2">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="proposalId" value="@item.Id" />
+                        <button type="submit" class="btn btn-warning btn-sm">Express Interest</button>
+                    </form>
+
+                    <form asp-action="ConfirmMatch" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="proposalId" value="@item.Id" />
+                        <button type="submit" class="btn btn-success btn-sm">Confirm Match</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
