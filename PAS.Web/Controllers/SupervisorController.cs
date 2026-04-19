@@ -57,3 +57,20 @@ public async Task<IActionResult> Expertise(List<int> selectedAreas)
     TempData["Success"] = "Expertise areas saved successfully.";
     return RedirectToAction(nameof(Dashboard));
 }
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> ExpressInterest(int proposalId)
+{
+    var supervisorId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+    var result = await _matchingService.ExpressInterestAsync(proposalId, supervisorId);
+
+    if (!result)
+    {
+        TempData["Success"] = "Express Interest failed or already exists.";
+        return RedirectToAction(nameof(Dashboard));
+    }
+
+    TempData["Success"] = "Interest expressed successfully!";
+    return RedirectToAction(nameof(Dashboard));
+}
