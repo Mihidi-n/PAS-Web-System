@@ -1,1 +1,37 @@
-﻿
+// GET: Edit
+    public async Task<IActionResult> Edit(int id)
+    {
+        var proposal = await _context.ProjectProposals.FindAsync(id);
+        if (proposal == null) return NotFound();
+
+        return View(proposal);
+    }
+
+    // POST: Edit
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(ProjectProposal proposal)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Update(proposal);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Proposal updated successfully!";
+            return RedirectToAction(nameof(Dashboard));
+        }
+        return View(proposal);
+    }
+    // Withdraw
+    public async Task<IActionResult> Withdraw(int id)
+    {
+        var proposal = await _context.ProjectProposals.FindAsync(id);
+        if (proposal == null) return NotFound();
+
+        _context.ProjectProposals.Remove(proposal);
+        await _context.SaveChangesAsync();
+
+        TempData["Success"] = "Proposal withdrawn successfully!";
+        return RedirectToAction(nameof(Dashboard));
+    }
+}﻿
